@@ -1,0 +1,106 @@
+:root {
+    --neon-cyan: #0ff;
+    --neon-magenta: #f0f;
+    --neon-yellow: #ff0;
+    --dark-bg: #0f0f0f;
+    --darker-bg: #080808;
+}
+
+body {
+    background: var(--dark-bg);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.neon-text {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan),
+                 0 0 20px var(--neon-cyan);
+    animation: neonPulse 1.5s infinite alternate;
+}
+
+.neon-border {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 15px var(--neon-cyan),
+                inset 0 0 15px var(--neon-cyan);
+}
+
+.neon-border-bottom {
+    border-bottom: 2px solid var(--neon-cyan);
+    box-shadow: 0 5px 15px var(--neon-cyan);
+}
+
+.neon-btn {
+    background: transparent;
+    color: var(--neon-magenta);
+    border: 2px solid var(--neon-magenta);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.neon-btn:hover {
+    background: var(--neon-magenta);
+    color: #000;
+    box-shadow: 0 0 25px var(--neon-magenta);
+    transform: scale(1.05);
+}
+
+.neon-btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+}
+
+.glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.video-item {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid var(--neon-cyan);
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--neon-cyan);
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid var(--neon-cyan) !important;
+    backdrop-filter: blur(5px);
+}
+
+@keyframes neonPulse {
+    from {
+        text-shadow: 0 0 10px var(--neon-cyan),
+                    0 0 20px var(--neon-cyan);
+    }
+    to {
+        text-shadow: 0 0 20px var(--neon-cyan),
+                    0 0 40px var(--neon-cyan);
+    }
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px var(--neon-cyan);
+    }
+    to {
+        box-shadow: 0 0 20px var(--neon-cyan);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .video-item {
+        flex-direction: column;
+    }
+    .video-item img {
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+    }
+}
