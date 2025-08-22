@@ -69,9 +69,21 @@ function getRelatedVideos($videoId, $maxResults = 5) {
         return json_decode(file_get_contents($cacheFile), true);
     }
     
+    // Get video details to extract tags
+    $videoDetails = getVideoDetails($videoId);
+    if (!$videoDetails || !isset($videoDetails['items'][0]['snippet']['tags'])) {
+        return false;
+    }
+    
+    $tags = $videoDetails['items'][0]['snippet']['tags'];
+    
+    // Use the most relevant tags for search (limit to 2-3 to avoid long URLs)
+    $searchQuery = implode('|', array_slice($tags, 0, 3));
+    
     $url = 'https://www.googleapis.com/youtube/v3/search?part=snippet' . 
-          '&relatedToVideoId=' . urlencode($videoId) . 
-          '&type=video&maxResults=' . (int)$maxResults . 
+          '&type=video' .
+          '&maxResults=' . (int)$maxResults . 
+          '&q=' . urlencode($searchQuery) .
           '&key=' . urlencode(API_KEY);
     
     $response = fetchFromYouTube($url);
