@@ -52,7 +52,8 @@ if (!file_exists($videoPath)) {
     }
 
     $headers = [
-        "skip_zrok_interstitial: true"
+        "skip_zrok_interstitial: true",
+        "ngrok-skip-browser-warning: true"
     ];
 
     $opts = [
