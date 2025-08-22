@@ -15,8 +15,8 @@ if (empty($videoDetails['items'])) {
 }
 
 $downloadDir = __DIR__ . '/downloads';
-$videoPath = "$downloadDir/$videoId.webm";
-$videoURL = "/downloads/$videoId.webm";
+$videoPath = "$downloadDir/$videoId.mp4";
+$videoURL = "/downloads/$videoId.mp4";
 
 $video = $videoDetails['items'][0];
 $pageTitle = sanitizeOutput($video['snippet']['title']) . " - " . SITE_NAME;
@@ -25,7 +25,7 @@ $pageDescription = sanitizeOutput(substr($video['snippet']['description'], 0, 16
 require_once 'includes/header.php';
 
 if (!file_exists($videoPath)) {
-    $downloadURL = YT_DLP_API . "/download?url=https://www.youtube.com/watch?v=$videoId";
+    $downloadURL = YT_DLP_API . "/downloadfallback?url=https://www.youtube.com/watch?v=$videoId";
 
     header("Content-Type: text/html");
     echo '<div class="container text-center py-5">
@@ -51,7 +51,20 @@ if (!file_exists($videoPath)) {
         $totalSize = (int)$headers['Content-Length'];
     }
 
-    $read = @fopen($downloadURL, 'rb');
+    $headers = [
+        "skip_zrok_interstitial: true"
+    ];
+
+    $opts = [
+        "http" => [
+            "method" => "GET",
+            "header" => implode("\r\n", $headers)
+        ]
+    ];
+
+    $context = stream_context_create($opts);
+
+    $read = @fopen($downloadURL, 'rb', false, $context);
     $write = @fopen($videoPath, 'wb');
 
     if ($read && $write) {
@@ -60,7 +73,6 @@ if (!file_exists($videoPath)) {
             $chunk = fread($read, 1024 * 8);
             fwrite($write, $chunk);
             $downloaded += strlen($chunk);
-
             if ($totalSize > 0) {
                 $percent = round(($downloaded / $totalSize) * 100);
                 echo "<script>updateProgress($percent);</script>";
@@ -71,16 +83,29 @@ if (!file_exists($videoPath)) {
         fclose($write);
     } else {
         // fallback to cURL if fopen fails
+        echo "<script>console.log('fopen failed');</script>";
         echo "<script>updateProgress(0);</script>";
         ob_flush(); flush();
 
         $ch = curl_init($downloadURL);
         $fp = fopen($videoPath, 'wb');
 
+        if (!is_writable(dirname($videoPath))) {
+            echo "<div class='text-danger'>Can't download videos right now, sorry.</div>";
+            exit;
+        }
+
+        if (!$fp) {
+            echo "<div class='text-danger'>An error occured, I'm sorry, but you'll have to wait 'till we update our API.</div>";
+            curl_close($ch);
+            exit;
+        }
+
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_BUFFERSIZE, 1024 * 8);
         curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["skip_zrok_interstitial: true"]);
         curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function (
             $resource, $dl_size, $dl, $ul_size, $ul
         ) {
@@ -101,10 +126,10 @@ if (!file_exists($videoPath)) {
         fclose($fp);
     }
 
-    echo "<script>setTimeout(() => window.location.reload(), 1000);</script>";
-    exit;
-}
 
+        echo "<script>setTimeout(() => window.location.reload(), 1000);</script>";
+        exit;
+    }
 
 $relatedVideos = getRelatedVideos($videoId);
 ?>

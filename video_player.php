@@ -8,7 +8,7 @@ if (empty($videoId)) {
     exit;
 }
 
-$videoPath = __DIR__ . '/downloads/' . $videoId . '.webm';
+$videoPath = __DIR__ . '/downloads/' . $videoId . '.mp4';
 if (!file_exists($videoPath)) {
     header("HTTP/1.0 404 Not Found");
     exit;
@@ -142,7 +142,7 @@ $pageTitle = !empty($videoDetails['items']) ? sanitizeOutput($videoDetails['item
         </div>
         
         <video id="videoPlayer" autoplay>
-            <source src="/downloads/<?= $videoId ?>.webm" type="video/webm">
+            <source src="/downloads/<?= $videoId ?>.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         
