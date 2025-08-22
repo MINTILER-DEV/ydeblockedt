@@ -1,106 +1,106 @@
 :root {
-    --neon-cyan: #0ff;
-    --neon-magenta: #f0f;
-    --neon-yellow: #ff0;
-    --dark-bg: #0f0f0f;
-    --darker-bg: #080808;
+    --bg-dark: #121212;
+    --bg-darker: #0a0a0a;
+    --text-light: #f1f1f1;
+    --text-muted: #b3b3b3;
+    --primary: #1f80e0;   /* accent color */
+    --secondary: #2a2a2a;
+    --radius: 12px;
+    --transition: 0.25s ease;
 }
 
 body {
-    background: var(--dark-bg);
-    color: #fff;
+    background: var(--bg-dark);
+    color: var(--text-light);
     font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
 }
 
-.neon-text {
-    color: var(--neon-cyan);
-    text-shadow: 0 0 10px var(--neon-cyan),
-                 0 0 20px var(--neon-cyan);
-    animation: neonPulse 1.5s infinite alternate;
+/* navbar */
+.navbar {
+    background: var(--bg-darker) !important;
+    border-bottom: 1px solid #1f1f1f;
+}
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.3rem;
 }
 
-.neon-border {
-    border: 2px solid var(--neon-cyan);
-    box-shadow: 0 0 15px var(--neon-cyan),
-                inset 0 0 15px var(--neon-cyan);
+/* inputs */
+input.form-control {
+    background: var(--secondary);
+    border: 1px solid #333;
+    color: var(--text-light);
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+input.form-control:focus {
+    background: #1a1a1a;
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(31,128,224,0.3);
 }
 
-.neon-border-bottom {
-    border-bottom: 2px solid var(--neon-cyan);
-    box-shadow: 0 5px 15px var(--neon-cyan);
+/* buttons */
+.btn, .neon-btn, .neon-btn-lg {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.6rem 1.2rem;
+    transition: var(--transition);
+}
+.btn:hover, .neon-btn:hover, .neon-btn-lg:hover {
+    background: #1560ad;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-.neon-btn {
-    background: transparent;
-    color: var(--neon-magenta);
-    border: 2px solid var(--neon-magenta);
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
+/* cards / video items */
+.video-card {
+    display: block;
+    background: var(--secondary);
+    border-radius: var(--radius);
+    padding: 12px;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+}
+.video-card img {
+    border-radius: var(--radius);
 }
 
-.neon-btn:hover {
-    background: var(--neon-magenta);
-    color: #000;
-    box-shadow: 0 0 25px var(--neon-magenta);
-    transform: scale(1.05);
+/* headings */
+h1, h3, h5 {
+    color: var(--text-light);
+}
+p.lead {
+    color: var(--text-muted);
 }
 
-.neon-btn-lg {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.25rem;
+/* footer */
+footer {
+    background: var(--bg-darker);
+    color: var(--text-muted);
+    padding: 20px;
+    border-top: 1px solid #1f1f1f;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
-.glow {
-    animation: glow 2s ease-in-out infinite alternate;
+/* animations */
+a, button, input, .video-card {
+    transition: all var(--transition);
 }
 
-.video-item {
-    background: rgba(15, 15, 15, 0.7);
-    border: 1px solid var(--neon-cyan);
-    transition: all 0.3s;
-    backdrop-filter: blur(5px);
-}
-
-.video-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--neon-cyan);
-}
-
-.card {
-    background: rgba(0, 0, 0, 0.5) !important;
-    border: 1px solid var(--neon-cyan) !important;
-    backdrop-filter: blur(5px);
-}
-
-@keyframes neonPulse {
-    from {
-        text-shadow: 0 0 10px var(--neon-cyan),
-                    0 0 20px var(--neon-cyan);
-    }
-    to {
-        text-shadow: 0 0 20px var(--neon-cyan),
-                    0 0 40px var(--neon-cyan);
-    }
-}
-
-@keyframes glow {
-    from {
-        box-shadow: 0 0 5px var(--neon-cyan);
-    }
-    to {
-        box-shadow: 0 0 20px var(--neon-cyan);
-    }
-}
-
-/* Responsive adjustments */
+/* responsive */
 @media (max-width: 768px) {
-    .video-item {
-        flex-direction: column;
-    }
-    .video-item img {
-        width: 100% !important;
-        margin-right: 0 !important;
+    .video-card {
         margin-bottom: 1rem;
     }
 }
