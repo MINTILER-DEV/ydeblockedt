@@ -1,106 +1,105 @@
 :root {
-    --bg-dark: #121212;
-    --bg-darker: #0a0a0a;
-    --text-light: #f1f1f1;
-    --text-muted: #b3b3b3;
-    --primary: #1f80e0;   /* accent color */
-    --secondary: #2a2a2a;
-    --radius: 12px;
+    --bg-dark: #0e0e0e;
+    --bg-darker: #080808;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent: #3b82f6; /* soft blue accent */
+    --accent-hover: #60a5fa;
+    --text: #e5e5e5;
+    --text-muted: #a3a3a3;
+    --radius: 1rem;
     --transition: 0.25s ease;
 }
 
 body {
     background: var(--bg-dark);
-    color: var(--text-light);
-    font-family: 'Segoe UI', sans-serif;
+    color: var(--text);
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
     line-height: 1.6;
 }
 
-/* navbar */
-.navbar {
-    background: var(--bg-darker) !important;
-    border-bottom: 1px solid #1f1f1f;
-}
-.navbar-brand {
+h1, h2, h3, h4 {
     font-weight: 600;
-    font-size: 1.3rem;
-}
-
-/* inputs */
-input.form-control {
-    background: var(--secondary);
-    border: 1px solid #333;
-    color: var(--text-light);
-    border-radius: var(--radius);
-    transition: var(--transition);
-}
-input.form-control:focus {
-    background: #1a1a1a;
-    border-color: var(--primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(31,128,224,0.3);
-}
-
-/* buttons */
-.btn, .neon-btn, .neon-btn-lg {
-    background: var(--primary);
     color: #fff;
-    border: none;
-    border-radius: var(--radius);
-    padding: 0.6rem 1.2rem;
-    transition: var(--transition);
-}
-.btn:hover, .neon-btn:hover, .neon-btn-lg:hover {
-    background: #1560ad;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* cards / video items */
-.video-card {
-    display: block;
-    background: var(--secondary);
+/* reusable card */
+.card {
+    background: var(--card-bg);
     border-radius: var(--radius);
-    padding: 12px;
-    text-decoration: none;
-    color: var(--text-light);
-    transition: var(--transition);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(8px);
+    transition: transform var(--transition), box-shadow var(--transition);
 }
-.video-card:hover {
+
+.card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
-.video-card img {
+
+/* video item */
+.video-item {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
     border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
 }
 
-/* headings */
-h1, h3, h5 {
-    color: var(--text-light);
-}
-p.lead {
-    color: var(--text-muted);
-}
-
-/* footer */
-footer {
-    background: var(--bg-darker);
-    color: var(--text-muted);
-    padding: 20px;
-    border-top: 1px solid #1f1f1f;
-    text-align: center;
-    font-size: 0.9rem;
+.video-item img {
+    border-radius: var(--radius) 0 0 var(--radius);
+    width: 180px;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* animations */
-a, button, input, .video-card {
-    transition: all var(--transition);
+.video-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* button */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+}
+
+.btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* subtle link style */
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--accent-hover);
 }
 
 /* responsive */
 @media (max-width: 768px) {
-    .video-card {
-        margin-bottom: 1rem;
+    .video-item {
+        flex-direction: column;
+    }
+
+    .video-item img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius) var(--radius) 0 0;
     }
 }
