@@ -69,22 +69,32 @@ function getRelatedVideos($videoId, $maxResults = 5) {
         return json_decode(file_get_contents($cacheFile), true);
     }
     
-    // Get video details to extract tags
+    // Get video details to extract category and tags
     $videoDetails = getVideoDetails($videoId);
-    if (!$videoDetails || !isset($videoDetails['items'][0]['snippet']['tags'])) {
+    if (!$videoDetails || !isset($videoDetails['items'][0])) {
         return false;
     }
     
-    $tags = $videoDetails['items'][0]['snippet']['tags'];
+    $snippet = $videoDetails['items'][0]['snippet'];
+    $categoryId = $snippet['categoryId'];
+    $tags = isset($snippet['tags']) ? $snippet['tags'] : [];
     
-    // Use the most relevant tags for search (limit to 2-3 to avoid long URLs)
-    $searchQuery = implode('|', array_slice($tags, 0, 3));
+    // Build search query - use category as primary, tags as secondary
+    $searchQuery = '';
+    if (!empty($tags)) {
+        $searchQuery = implode('|', array_slice($tags, 0, 2));
+    }
     
     $url = 'https://www.googleapis.com/youtube/v3/search?part=snippet' . 
           '&type=video' .
           '&maxResults=' . (int)$maxResults . 
-          '&q=' . urlencode($searchQuery) .
+          '&videoCategoryId=' . urlencode($categoryId) .
           '&key=' . urlencode(API_KEY);
+    
+    // Add search query if we have tags
+    if (!empty($searchQuery)) {
+        $url .= '&q=' . urlencode($searchQuery);
+    }
     
     $response = fetchFromYouTube($url);
     if ($response) {
