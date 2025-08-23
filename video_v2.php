@@ -46,27 +46,29 @@ if (!file_exists($videoPath)) {
     // show progress UI
     echo '<div class="container text-center py-5">
             <h3 class="neon-text">Downloading your video... 🔥</h3>
+            <div id="progressStatus" class="mt-2 text-muted">Starting...</div>
             <div class="progress mt-4" style="height: 30px;">
                 <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
-                     role="progressbar" style="width: 0%">0%</div>
+                    role="progressbar" style="width: 0%">0%</div>
             </div>
-          </div>';
+        </div>';
 
     echo '<script>
-            function updateProgress(percent) {
+            function updateProgress(percent, status) {
                 const bar = document.getElementById("progressBar");
+                const statusEl = document.getElementById("progressStatus");
                 bar.style.width = percent + "%";
                 bar.textContent = percent + "%";
+                statusEl.textContent = status;
             }
 
-            // connect to progress SSE
-            const es = new EventSource("/rizzystream.php?id=' . $apiVideoId . '");
+            const es = new EventSource("/rizzystream.php?id=<?= $apiVideoId ?>&vid=<?= $videoId ?>");
             es.onmessage = function(e) {
-                const percent = parseInt(e.data);
-                if (percent >= 0) {
-                    updateProgress(percent);
+                const data = JSON.parse(e.data);
+                if (data.percent >= 0) {
+                    updateProgress(data.percent, data.status);
                 }
-                if (percent >= 100) {
+                if (data.percent >= 100) {
                     es.close();
                     setTimeout(() => window.location.reload(), 1000);
                 }
