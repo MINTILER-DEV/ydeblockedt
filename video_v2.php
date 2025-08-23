@@ -62,7 +62,7 @@ if (!file_exists($videoPath)) {
                 statusEl.textContent = status;
             }
 
-            const es = new EventSource("/rizzystream.php?id=' . $apiVideoId . '&vid=' . $videoId '");
+            const es = new EventSource("/rizzystream.php?id=' . $apiVideoId . '&vid=' . $videoId . '");
             es.onmessage = function(e) {
                 const data = JSON.parse(e.data);
                 if (data.percent >= 0) {
