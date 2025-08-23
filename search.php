@@ -32,19 +32,27 @@ $results = searchVideos($query, $maxResults);
                     if ($item['id']['kind'] === 'youtube#video'): 
                         $i++;
                 ?>
-                        <div class="video-item p-3 rounded-3 shadow-lg" 
-                             data-aos="fade-up" 
-                             data-aos-delay="<?= $i * 100 ?>">
-                            <div class="d-flex">
-                                <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0">
+                        <div class="video-item p-3 rounded-3 shadow-lg position-relative" 
+                            data-aos="fade-up" 
+                            data-aos-delay="<?= $i * 100 ?>"
+                            data-video-id="<?= $item['id']['videoId'] ?>">
+
+                            <div class="loading-overlay d-flex justify-content-center align-items-center">
+                                <div class="spinner-border text-accent" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex video-content opacity-50">
+                                <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0 disabled-link">
                                     <img src="<?= $item['snippet']['thumbnails']['medium']['url'] ?>" 
-                                         class="img-fluid rounded-3 me-3 neon-border" 
-                                         style="width: 240px; height: 180px; object-fit: cover;">
+                                        class="img-fluid rounded-3 me-3 neon-border" 
+                                        style="width: 240px; height: 180px; object-fit: cover;">
                                 </a>
                                 <div>
                                     <h4 class="mb-2">
                                         <a href="/video.php?id=<?= $item['id']['videoId'] ?>" 
-                                           class="text-white text-decoration-none hover-glow">
+                                        class="text-white text-decoration-none hover-glow disabled-link">
                                             <?= sanitizeOutput($item['snippet']['title']) ?>
                                         </a>
                                     </h4>
