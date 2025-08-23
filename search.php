@@ -64,4 +64,22 @@ $results = searchVideos($query, $maxResults);
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const videoIds = <?= json_encode(array_map(
+    fn($item) => $item['id']['videoId'], 
+    array_filter($results['items'], fn($i) => $i['id']['kind'] === 'youtube#video')
+  )) ?>;
+
+  videoIds.forEach((id, idx) => {
+    setTimeout(() => {
+      fetch(`/prefetch.php?id=${id}`)
+        .then(r => r.text())
+        .then(txt => console.log("Prefetch", id, txt));
+    }, idx * 2000); // stagger to avoid hammering server
+  });
+});
+</script>
+
+
 <?php require_once 'includes/footer.php'; ?>
