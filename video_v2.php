@@ -64,6 +64,8 @@ if (!file_exists($videoPath)) {
 
             const es = new EventSource("/rizzystream.php?id=' . $apiVideoId . '&vid=' . $videoId . '");
             es.onmessage = function(e) {
+                console.log("message")
+                console.log(e.data)
                 const data = JSON.parse(e.data);
                 if (data.percent >= 0) {
                     updateProgress(data.percent, data.status);
