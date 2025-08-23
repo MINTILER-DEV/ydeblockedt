@@ -133,39 +133,6 @@ if (!file_exists($videoPath)) {
     }
 
 $relatedVideos = getRelatedVideos($videoId);
-
-if ($relatedVideos && !empty($relatedVideos['items'])) {
-    $mh = curl_multi_init();
-    $handles = [];
-
-    foreach ($relatedVideos['items'] as $related) {
-        if (!empty($related['id']['videoId'])) {
-            $rid = $related['id']['videoId'];
-            $rpath = __DIR__ . "/downloads/$rid.mp4";
-
-            if (!file_exists($rpath)) {
-                $url = "/prefetch.php?id=" . urlencode($rid);
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-                curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100); // don't block
-                curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
-                curl_multi_add_handle($mh, $ch);
-                $handles[] = $ch;
-            }
-        }
-    }
-
-    // run them all at once, instantly close
-    do {
-        $status = curl_multi_exec($mh, $active);
-    } while ($status === CURLM_CALL_MULTI_PERFORM);
-
-    foreach ($handles as $ch) {
-        curl_multi_remove_handle($mh, $ch);
-        curl_close($ch);
-    }
-    curl_multi_close($mh);
-}
 ?>
 
 <!-- VIDEO PLAYER -->

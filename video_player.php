@@ -3,12 +3,14 @@ require_once 'includes/config.php';
 require_once 'includes/functions.php';
 
 $videoId = $_GET['id'] ?? '';
+$ext     = strtolower($_GET['ext'] ?? 'mp4'); // default to mp4
+
 if (empty($videoId)) {
     header("HTTP/1.0 404 Not Found");
     exit;
 }
 
-$videoPath = __DIR__ . '/downloads/' . $videoId . '.mp4';
+$videoPath = __DIR__ . "/downloads/{$videoId}.{$ext}";
 if (!file_exists($videoPath)) {
     header("HTTP/1.0 404 Not Found");
     exit;
@@ -16,7 +18,19 @@ if (!file_exists($videoPath)) {
 
 // Get video details for title
 $videoDetails = getVideoDetails($videoId);
-$pageTitle = !empty($videoDetails['items']) ? sanitizeOutput($videoDetails['items'][0]['snippet']['title']) : 'Video Player';
+$pageTitle = !empty($videoDetails['items']) 
+    ? sanitizeOutput($videoDetails['items'][0]['snippet']['title']) 
+    : 'Video Player';
+
+// map extension -> mimetype
+$mimeTypes = [
+    'mp4'  => 'video/mp4',
+    'webm' => 'video/webm',
+    'ogg'  => 'video/ogg',
+    'mkv'  => 'video/x-matroska',
+    'avi'  => 'video/x-msvideo'
+];
+$mime = $mimeTypes[$ext] ?? 'video/mp4'; // fallback
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,10 +156,11 @@ $pageTitle = !empty($videoDetails['items']) ? sanitizeOutput($videoDetails['item
         </div>
         
         <video id="videoPlayer" autoplay>
-            <source src="/downloads/<?= $videoId ?>.mp4" type="video/mp4">
+            <source src="/downloads/<?= $videoId ?>.<?= $ext ?>" type="<?= $mime ?>">
             Your browser does not support the video tag.
         </video>
         
+        <!-- controls here unchanged -->
         <div class="controls">
             <div class="progress-container" id="progressContainer">
                 <div class="progress-bar" id="progressBar"></div>
