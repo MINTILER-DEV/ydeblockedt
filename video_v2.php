@@ -60,7 +60,7 @@ if (!file_exists($videoPath)) {
             }
 
             // connect to progress SSE
-            const es = new EventSource("' . YT_DLP_API . '/progress?id=' . $apiVideoId . '");
+            const es = new EventSource("/rizzystream.php?id=' . $apiVideoId . '");
             es.onmessage = function(e) {
                 const percent = parseInt(e.data);
                 if (percent >= 0) {
