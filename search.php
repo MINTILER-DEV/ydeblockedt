@@ -19,33 +19,46 @@ $results = searchVideos($query, $maxResults);
 ?>
 
 <div class="container">
-    <h1 class="neon-text mb-4">Search Results for "<?= sanitizeOutput($query) ?>"</h1>
+    <h1 class="neon-text mb-4 animate__animated animate__fadeInDown">
+        Search Results for "<?= sanitizeOutput($query) ?>"
+    </h1>
     
     <div class="row">
         <div class="col-md-8">
             <div id="results-container" class="d-grid gap-3">
-                <?php foreach ($results['items'] as $item): ?>
-                    <?php if ($item['id']['kind'] === 'youtube#video'): ?>
-                        <div class="video-item p-3 rounded-3">
+                <?php 
+                $i = 0;
+                foreach ($results['items'] as $item): 
+                    if ($item['id']['kind'] === 'youtube#video'): 
+                        $i++;
+                ?>
+                        <div class="video-item p-3 rounded-3 shadow-lg" 
+                             data-aos="fade-up" 
+                             data-aos-delay="<?= $i * 100 ?>">
                             <div class="d-flex">
                                 <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0">
                                     <img src="<?= $item['snippet']['thumbnails']['medium']['url'] ?>" 
-                                         class="img-fluid rounded-3 me-3" 
-                                         style="width: 240px; height: 180px">
+                                         class="img-fluid rounded-3 me-3 neon-border" 
+                                         style="width: 240px; height: 180px; object-fit: cover;">
                                 </a>
                                 <div>
-                                    <h4>
-                                        <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="text-white text-decoration-none">
+                                    <h4 class="mb-2">
+                                        <a href="/video.php?id=<?= $item['id']['videoId'] ?>" 
+                                           class="text-white text-decoration-none hover-glow">
                                             <?= sanitizeOutput($item['snippet']['title']) ?>
                                         </a>
                                     </h4>
-                                    <p><?= sanitizeOutput($item['snippet']['description']) ?></p>
-                                    <small class="text-muted">Channel: <?= sanitizeOutput($item['snippet']['channelTitle']) ?></small>
+                                    <p class="text-muted small mb-2">
+                                        <?= sanitizeOutput($item['snippet']['description']) ?>
+                                    </p>
+                                    <small class="text-accent">Channel: <?= sanitizeOutput($item['snippet']['channelTitle']) ?></small>
                                 </div>
                             </div>
                         </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                <?php 
+                    endif; 
+                endforeach; 
+                ?>
             </div>
         </div>
     </div>

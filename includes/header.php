@@ -20,8 +20,16 @@ $pageDescription = isset($pageDescription) ? $pageDescription : SITE_DESCRIPTION
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Animate.css for big flashy animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/styles.css">
 </head>
@@ -36,3 +44,11 @@ $pageDescription = isset($pageDescription) ? $pageDescription : SITE_DESCRIPTION
         </div>
     </nav>
     <main class="flex-grow-1 py-4">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200, // how long animations last
+            once: true, // animate only once
+        });
+    </script>
+

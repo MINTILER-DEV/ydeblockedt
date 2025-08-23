@@ -10,8 +10,12 @@
     --transition: 0.25s ease;
 }
 
+/* ===================== BODY ===================== */
 body {
-    background: var(--bg-dark);
+    background: linear-gradient(-45deg, #0e0e0e, #111, #1a1a1a, #0e0e0e);
+    background-size: 400% 400%;
+    animation: bgShift 15s ease infinite;
+
     color: var(--text);
     font-family: 'Segoe UI', 'Inter', sans-serif;
     margin: 0;
@@ -19,12 +23,19 @@ body {
     line-height: 1.6;
 }
 
+@keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===================== HEADINGS ===================== */
 h1, h2, h3, h4 {
     font-weight: 600;
     color: #fff;
 }
 
-/* reusable card */
+/* ===================== CARD ===================== */
 .card {
     background: var(--card-bg);
     border-radius: var(--radius);
@@ -39,7 +50,7 @@ h1, h2, h3, h4 {
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
 
-/* video item */
+/* ===================== VIDEO ITEM ===================== */
 .video-item {
     display: flex;
     align-items: center;
@@ -57,11 +68,12 @@ h1, h2, h3, h4 {
 }
 
 .video-item:hover {
-    transform: translateY(-3px);
+    transform: scale(1.03) rotate(0.5deg); /* bounce effect */
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
 }
 
-/* button */
+/* ===================== BUTTON ===================== */
 .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
@@ -73,6 +85,7 @@ h1, h2, h3, h4 {
     font-weight: 500;
     cursor: pointer;
     transition: background var(--transition), transform var(--transition);
+    animation: neonPulse 2s infinite;
 }
 
 .btn:hover {
@@ -80,7 +93,13 @@ h1, h2, h3, h4 {
     transform: translateY(-2px);
 }
 
-/* subtle link style */
+/* neon glow */
+@keyframes neonPulse {
+    0%, 100% { box-shadow: 0 0 5px var(--accent), 0 0 20px var(--accent); }
+    50% { box-shadow: 0 0 20px var(--accent-hover), 0 0 40px var(--accent-hover); }
+}
+
+/* ===================== LINKS ===================== */
 a {
     color: var(--accent);
     text-decoration: none;
@@ -91,7 +110,17 @@ a:hover {
     color: var(--accent-hover);
 }
 
-/* responsive */
+/* ===================== NAVBAR ===================== */
+.navbar {
+    animation: slideDown 1s ease forwards;
+    transform: translateY(-100%);
+}
+
+@keyframes slideDown {
+    to { transform: translateY(0); }
+}
+
+/* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
     .video-item {
         flex-direction: column;
@@ -102,4 +131,17 @@ a:hover {
         height: auto;
         border-radius: var(--radius) var(--radius) 0 0;
     }
+}
+
+/* ===================== MISCELLANEOUS ===================== */
+
+.neon-border {
+  box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-hover);
+}
+
+.hover-glow:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent-hover);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-hover);
 }

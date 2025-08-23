@@ -138,29 +138,51 @@ $relatedVideos = getRelatedVideos($videoId);
 <!-- VIDEO PLAYER -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
-            <div id="videoContainer" style="display: block;" class="ratio ratio-16x9 mb-4 neon-border">
+        <!-- Main video column -->
+        <div class="col-lg-8 mb-5">
+            <!-- animated video container -->
+            <div id="videoContainer" 
+                 class="ratio ratio-16x9 mb-4 neon-border animate__animated animate__fadeInUp">
                 <iframe src="/video_player.php?id=<?= $videoId ?>" 
-        frameborder="0" 
-        allowfullscreen
-        class="ratio ratio-16x9 mb-4 neon-border"
-        style="width: 100%; height: 100%;"></iframe>
+                        frameborder="0" 
+                        allowfullscreen
+                        class="rounded-3"
+                        style="width: 100%; height: 100%;"></iframe>
             </div>
-            <h1 class="neon-text"><?= sanitizeOutput($video['snippet']['title']) ?></h1>
-            <!-- rest of your content... -->
+
+            <!-- video title -->
+            <h1 class="neon-text mb-3 animate__animated animate__fadeInLeft">
+                <?= sanitizeOutput($video['snippet']['title']) ?>
+            </h1>
+
+            <!-- video description -->
+            <p class="text-muted animate__animated animate__fadeInUp animate__delay-1s">
+                <?= nl2br(sanitizeOutput($video['snippet']['description'])) ?>
+            </p>
         </div>
+
+        <!-- Related videos sidebar -->
         <div class="col-lg-4">
-            <h4 class="neon-text mb-3">Related Videos</h4>
+            <h4 class="neon-text mb-3 animate__animated animate__fadeInRight">Related Videos</h4>
             <?php if ($relatedVideos && !empty($relatedVideos['items'])): ?>
-                <?php foreach ($relatedVideos['items'] as $related): ?>
-                    <div class="mb-3">
-                        <a href="/video.php?id=<?= $related['id']['videoId'] ?>" class="d-flex text-white text-decoration-none">
+                <?php 
+                $delay = 0;
+                foreach ($relatedVideos['items'] as $related): 
+                    $delay += 100; // stagger animations
+                ?>
+                    <div class="video-item p-2 rounded-3 mb-3 shadow-lg hover-glow" 
+                         data-aos="fade-left" 
+                         data-aos-delay="<?= $delay ?>">
+                        <a href="/video.php?id=<?= $related['id']['videoId'] ?>" 
+                           class="d-flex text-white text-decoration-none">
                             <img src="<?= $related['snippet']['thumbnails']['medium']['url'] ?>"
-                                 class="img-fluid rounded-3 me-3"
-                                 style="width: 120px; height: 90px">
+                                 class="img-fluid rounded-3 me-3 neon-border"
+                                 style="width: 120px; height: 90px; object-fit: cover;">
                             <div>
-                                <h6><?= sanitizeOutput($related['snippet']['title']) ?></h6>
-                                <small class="text-muted"><?= sanitizeOutput($related['snippet']['channelTitle']) ?></small>
+                                <h6 class="mb-1"><?= sanitizeOutput($related['snippet']['title']) ?></h6>
+                                <small class="text-muted">
+                                    <?= sanitizeOutput($related['snippet']['channelTitle']) ?>
+                                </small>
                             </div>
                         </a>
                     </div>
