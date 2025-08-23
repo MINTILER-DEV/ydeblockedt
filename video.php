@@ -144,7 +144,7 @@ if ($relatedVideos && !empty($relatedVideos['items'])) {
             $rpath = __DIR__ . "/downloads/$rid.mp4";
 
             if (!file_exists($rpath)) {
-                $url = SITE_URL . "/prefetch.php?id=" . urlencode($rid);
+                $url = "/prefetch.php?id=" . urlencode($rid);
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
                 curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100); // don't block
