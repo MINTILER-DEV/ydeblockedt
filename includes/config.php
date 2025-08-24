@@ -1,11 +1,13 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+/*
+AIzaSyBdCHy_9607c7yMxFOoKZ5LB7rHVsEaT8s
+AIzaSyD4KHNewNVn6bDGIHMX3TC2PlXwlbocW2M
+AIzaSyCNmPWJLukDyNYxvjjlt4s70_h7Kp8PJho
+*/
 // YouTube API Configuration
-define('NONE', 'AIzaSyD4KHNewNVn6bDGIHMX3TC2PlXwlbocW2M');
-define('API_KEY', 'AIzaSyBdCHy_9607c7yMxFOoKZ5LB7rHVsEaT8s');
-define('NONE2', 'AIzaSyCNmPWJLukDyNYxvjjlt4s70_h7Kp8PJho');
+define('API_KEY', 'AIzaSyD4KHNewNVn6bDGIHMX3TC2PlXwlbocW2M');
 
 define('YT_DLP_API', 'https://6136797e0833.ngrok-free.app');
 
