@@ -24,10 +24,8 @@ $savePath = __DIR__ . "/downloads/$videoId.webm";
 // -------- PHASE 1: API Download 0–50 --------
 while (true) {
     $apiPercent = @file_get_contents($apiProgressUrl);
-    $apiPercent = intval($apiPercent);
 
     if ($apiPercent < 50) {
-        $scaled = intval($apiPercent); // 0-50%
         echo "data: {\"percent\":$apiPercent,\"status\":\"Downloading video, this may take a while\"}\n\n";
         flush();
         sleep(1);
