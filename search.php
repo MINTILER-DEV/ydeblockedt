@@ -37,12 +37,6 @@ $results = searchVideos($query, $maxResults);
                             data-aos-delay="<?= $i * 100 ?>"
                             data-video-id="<?= $item['id']['videoId'] ?>">
 
-                            <div class="loading-overlay d-flex justify-content-center align-items-center">
-                                <div class="spinner-border text-accent" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-
                             <div class="d-flex video-content opacity-50">
                                 <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0 disabled-link">
                                     <img src="<?= $item['snippet']['thumbnails']['medium']['url'] ?>" 

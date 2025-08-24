@@ -18,6 +18,10 @@ $downloadDir = __DIR__ . '/downloads';
 $videoPath = "$downloadDir/$videoId.webm";
 $videoURL  = "/downloads/$videoId.webm";
 
+if (file_exists($videoPath) && filesize($videoPath) < 50 * 1024) {
+    unlink($videoPath); // delete broken file
+}
+
 $video = $videoDetails['items'][0];
 $pageTitle = sanitizeOutput($video['snippet']['title']) . " - " . SITE_NAME;
 $pageDescription = sanitizeOutput(substr($video['snippet']['description'], 0, 160));

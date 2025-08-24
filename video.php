@@ -18,6 +18,10 @@ $downloadDir = __DIR__ . '/downloads';
 $videoPath = "$downloadDir/$videoId.mp4";
 $videoURL = "/downloads/$videoId.mp4";
 
+if (file_exists($videoPath) && filesize($videoPath) < 50 * 1024) {
+    unlink($videoPath); // delete broken file
+}
+
 $video = $videoDetails['items'][0];
 $pageTitle = sanitizeOutput($video['snippet']['title']) . " - " . SITE_NAME;
 $pageDescription = sanitizeOutput(substr($video['snippet']['description'], 0, 160));
@@ -30,6 +34,7 @@ if (!file_exists($videoPath)) {
     header("Content-Type: text/html");
     echo '<div class="container text-center py-5">
             <h3 class="neon-text">Downloading your video... 🔥</h3>
+            <div id="progressStatus" class="mt-2 text-muted">API downloading video, please wait..</div>
             <div class="progress mt-4" style="height: 30px;">
                 <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
                      role="progressbar" style="width: 0%">0%</div>
@@ -38,8 +43,12 @@ if (!file_exists($videoPath)) {
     echo '<script>
             function updateProgress(percent) {
                 const bar = document.getElementById("progressBar");
+                const statusEl = document.getElementById("progressStatus");
                 bar.style.width = percent + "%";
                 bar.textContent = percent + "%";
+                if (percent > 0) {
+                    statusEl.textContent = "Transferring (playback will begin shortly).."
+                }
             }
           </script>';
     ob_flush(); flush();
