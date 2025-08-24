@@ -28,7 +28,7 @@ while (true) {
 
     if ($apiPercent < 50) {
         $scaled = intval($apiPercent); // 0-50%
-        echo "data: {\"percent\":$scaled,\"status\":\"Downloading video, this may take a while\"}\n\n";
+        echo "data: {\"percent\":$apiPercent,\"status\":\"Downloading video, this may take a while\"}\n\n";
         flush();
         sleep(1);
     } else {
