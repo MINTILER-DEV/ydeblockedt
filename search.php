@@ -66,12 +66,13 @@ $results = searchVideos($query, $maxResults);
     </div>
 </div>
 
+<!--
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const videoIds = <?= json_encode(array_map(
+  const videoIds =  json_encode(array_map(
     fn($item) => $item['id']['videoId'], 
     array_filter($results['items'], fn($i) => $i['id']['kind'] === 'youtube#video')
-  )) ?>;
+  )) ;
 
   videoIds.forEach((id, idx) => {
     setTimeout(() => {
@@ -82,6 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-
+-->
 
 <?php require_once 'includes/footer.php'; ?>
