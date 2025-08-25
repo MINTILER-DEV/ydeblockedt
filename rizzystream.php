@@ -32,7 +32,7 @@ function extractInt($str) {
 // -------- PHASE 1: API Download 0–50 --------
 while (true) {
     $apiPercent = @file_get_contents($apiProgressUrl);
-    $apiPercent = extractInt($apiPercent)
+    $apiPercent = extractInt($apiPercent);
 
     if ($apiPercent < 50) {
         echo "data: {\"percent\":$apiPercent,\"status\":\"Downloading video, this may take a while\"}\n\n";
