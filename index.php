@@ -34,7 +34,7 @@ $trendingVideos = getTrendingVideos();
             <?php if ($trendingVideos && !empty($trendingVideos['items'])): ?>
                 <?php foreach ($trendingVideos['items'] as $video): ?>
                     <div class="col-md-4 mb-4">
-                        <a href="/video_v2.php?id=<?= $video['id'] ?>" class="video-card">
+                        <a href="/video.php?id=<?= $video['id'] ?>" class="video-card">
                             <img src="<?= $video['snippet']['thumbnails']['medium']['url'] ?>" 
                                  class="img-fluid rounded-3 mb-2">
                             <h5><?= sanitizeOutput($video['snippet']['title']) ?></h5>
