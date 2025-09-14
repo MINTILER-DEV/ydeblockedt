@@ -8,6 +8,10 @@ if (empty($videoId)) {
     exit;
 }
 
+// redir to video.php
+header("Location: /video.php?id={$videoId}");
+exit;
+
 $videoDetails = getVideoDetails($videoId);
 if (empty($videoDetails['items'])) {
     header("Location: /");

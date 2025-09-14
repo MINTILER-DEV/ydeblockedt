@@ -38,7 +38,7 @@ $results = searchVideos($query, $maxResults);
                             data-video-id="<?= $item['id']['videoId'] ?>">
 
                             <div class="d-flex video-content opacity-50">
-                                <a href="/video_v2.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0 disabled-link">
+                                <a href="/video.php?id=<?= $item['id']['videoId'] ?>" class="flex-shrink-0 disabled-link">
                                     <img src="<?= $item['snippet']['thumbnails']['medium']['url'] ?>" 
                                         class="img-fluid rounded-3 me-3 neon-border" 
                                         style="width: 240px; height: 180px; object-fit: cover;">
