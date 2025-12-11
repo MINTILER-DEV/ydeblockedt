@@ -9,7 +9,7 @@ AIzaSyCNmPWJLukDyNYxvjjlt4s70_h7Kp8PJho
 // YouTube API Configuration
 define('API_KEY', 'AIzaSyD4KHNewNVn6bDGIHMX3TC2PlXwlbocW2M');
 
-define('YT_DLP_API', 'https://a39f5556971d.ngrok-free.app');
+define('YT_DLP_API', 'https://xbi52dl6mf05.share.zrok.io');
 
 define('CACHE_DIR', __DIR__ . '/../cache');
 define('CACHE_EXPIRE', 7200); // 2 hours in seconds
